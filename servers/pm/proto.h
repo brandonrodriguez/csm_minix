@@ -56,6 +56,7 @@ int do_getepinfo(void);
 int do_getepinfo_o(void);
 int do_svrctl(void);
 int do_getsetpriority(void);
+int do_getproctable(void); /* !OSPROJ3! Gets the process table */
 
 /* schedule.c */
 void sched_init(void);

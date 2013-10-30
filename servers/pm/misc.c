@@ -495,3 +495,19 @@ char *brk_addr;
 	_brksize = brk_addr;
 	return 0;
 }
+/*===========================================================================*
+ *	!OSPROJ3!
+ *	do_getproctable  expects m1_p1 to be pointer to memory location
+ *   
+ *===========================================================================*/
+
+int do_getproctable(void)
+{
+	char *str = "Hello World";
+	char *strPtr = m_in.m1_p1;
+	
+	sys_vircopy(SYSTEM,(vir_bytes) str, SELF,(vir_bytes) strPtr), strlen(str + 1));
+	
+	return 0;
+}
+
