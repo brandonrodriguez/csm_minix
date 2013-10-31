@@ -5,6 +5,8 @@ LIB=		sys
 
 .include "arch/${MACHINE_ARCH}/Makefile.inc"
 
+#!OSPROJ3! Added sys_getproctable.c to the list below (in order)
+
 SRCS+=  \
 	alloc_util.c \
 	assert.c \
@@ -43,6 +45,7 @@ SRCS+=  \
 	sys_exit.c \
 	sys_fork.c \
 	sys_getinfo.c \
+	sys_getproctable.c \
 	sys_getsig.c \
 	sys_hz.c \
 	sys_irqctl.c \

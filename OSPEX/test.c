@@ -1,6 +1,7 @@
 #include "student.h"
 
-void main(void){
+void main(void)
+{
 
-studentInput();
+	studentInput();
 }

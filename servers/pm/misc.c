@@ -503,10 +503,12 @@ char *brk_addr;
 
 int do_getproctable(void)
 {
-	char *str = "Hello World";
+	char str[] = "Hello From the Process Manager\n";
 	char *strPtr = m_in.m1_p1;
 	
-	sys_vircopy(SYSTEM,(vir_bytes) str, SELF,(vir_bytes) strPtr), strlen(str + 1));
+	printf(&str);
+	
+	sys_vircopy(SYSTEM,(vir_bytes) &str, SELF,(vir_bytes) strPtr, sizeof(str));
 	
 	return 0;
 }
