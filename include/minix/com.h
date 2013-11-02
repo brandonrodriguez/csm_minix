@@ -1166,6 +1166,8 @@
 /*Constant for taskcalls from the Operating Systems GUI*/
 #define START_RECORDING		(SCHEDULING_BASE+7)
 #define DECREASE_HIST_COUNT	(SCHEDULING_BASE+8)
+/* !OSPROJ3! */
+#define SCHEDULING_GET_PROCTABLE (SCHEDULING_BASE+9)
 /*===========================================================================*
  *              Messages for USB                                             *
  *===========================================================================*/

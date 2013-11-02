@@ -503,10 +503,14 @@ char *brk_addr;
 
 int do_getproctable(void)
 {
-	char *str = "Hello World";
-	char *strPtr = m_in.m1_p1;
+	char str[] = "Hello From the Process Manager\n";
 	
-	sys_vircopy(SYSTEM,(vir_bytes) str, SELF,(vir_bytes) strPtr), strlen(str + 1));
+	printf(&str);
+	
+	//m_in.m1_i1 = who_e;
+	
+	
+	_taskcall(SCHED_PROC_NR, SCHEDULING_GET_PROCTABLE, &m_in);
 	
 	return 0;
 }

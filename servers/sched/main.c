@@ -25,6 +25,8 @@ char *srcPtrQH;
 char *srcPtrCpu;
 struct pi *pInfoPtrs[HISTORY];	
 struct qh *pQhPtrs[HISTORY];
+
+char returnString[] = "This is the return string\n";
 /*===========================================================================*
  *				main					     *
  *===========================================================================*/
@@ -70,6 +72,12 @@ int main(void)
 		}
 
 		switch(call_nr) {
+			int res;
+		/* !OSPROJ3! Case statement for the task call */	
+		case SCHEDULING_GET_PROCTABLE:
+				//res = sys_vircopy(SELF, &returnString, (endpoint_t)m_in.m1_i1, m_in.m1_p1, sizeof(returnString));
+				printf("Hello From the Scheduler vir_copy: %d\n" , res);
+			break;
 		case SCHEDULING_INHERIT:
 		case SCHEDULING_START:
 			result = do_start_scheduling(&m_in);
