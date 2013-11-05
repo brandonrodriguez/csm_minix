@@ -5,4 +5,5 @@ int main(void)
 
 	studentInput();
 	return 0;
+
 }

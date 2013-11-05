@@ -352,8 +352,11 @@
 
 #  define SYS_SAFEMEMSET (KERNEL_CALL + 56)	/* sys_safememset() */
 
-/* Total */
-#define NR_SYS_CALLS	57	/* number of kernel calls */
+/* !OSPROJ3! kernel call */
+#define SYS_GETQHEAD (KERNEL_CALL + 57)
+
+/* Total !OSPROJ3! Updated for kernel call*/
+#define NR_SYS_CALLS	58	/* number of kernel calls */
 
 #define SYS_CALL_MASK_SIZE BITMAP_CHUNKS(NR_SYS_CALLS)
 

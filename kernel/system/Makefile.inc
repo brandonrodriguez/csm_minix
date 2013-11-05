@@ -1,8 +1,11 @@
 # Makefile for system library implementation
 .include <bsd.own.mk>
 
+# !OSPROJ3! Updated for do_getqhead.c
+
 .PATH:	${.CURDIR}/system
 SRCS+= 	\
+	do_getqhead.c \
 	do_fork.c \
 	do_exec.c \
 	do_clear.c \

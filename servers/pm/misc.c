@@ -503,15 +503,11 @@ char *brk_addr;
 
 int do_getproctable(void)
 {
-	char str[] = "Hello From the Process Manager\n";
+	printf("In Process manager\n");
 	
-	printf(&str);
-	
-	//m_in.m1_i1 = who_e;
+	m_in.m1_i1 = who_e;	
 	
 	
-	_taskcall(SCHED_PROC_NR, SCHEDULING_GET_PROCTABLE, &m_in);
-	
-	return 0;
+	return _taskcall(SCHED_PROC_NR, SCHEDULING_GET_PROCTABLE, &m_in);
 }
 

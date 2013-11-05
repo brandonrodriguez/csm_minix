@@ -15,7 +15,7 @@ These are global variables and their extern decleration can be found in the glo.
 	number of priority queues).
 	HINT: You need to create a kernel call, because this information is in the kernel scheduling table.
 	HINT: The head of a priority queue may not exist if there are no runnable processes. Make sure you check for this. 
-	
+	 
 	3. CPU frequency. This is defined as u64_t cpuFreq in glo.h.
 	HINT: You can add this to the kernel call from part 2. 
 */
@@ -24,6 +24,7 @@ These are global variables and their extern decleration can be found in the glo.
 #include <stdlib.h>
 #include <stdio.h>
 #include <minix/syslib.h>
+#include </usr/src/include/minix/syslib.h>
 
 
 #include "student.h" 
@@ -40,29 +41,35 @@ int sys_getproctable(char *procPtr);
 void studentInput (void)
 {
 					
-	char string[] = "                          ";
 	
 	message m;
-	m.m1_p1 = &string;
+	m.m1_p1 = (char *)&pInfo;
 	
 	//sys_getproctable(string);
 	
 	_syscall(PM_PROC_NR, GETPROCTABLE , &m);
 	
-	printf(string);
-	printf("\n");
-	
-	/* Temp commented out below to procs() for testing the system call
-	//int i;
+	//_kernel_call(SYS_GETQHEAD, &m);
 
-	/* Replace struct pi pInfo[i][] = NULL with process table information from the scheduler*/
-	//for(i=0;i<HISTORY;i++)
-	//{
-	//	strcpy(pInfo[i][0].p_name,"NOPTABCOPY"); /*Signal to the GUI that there are no process tables */
-	//	pInfoPtrs[i] = &pInfo[i][0]; /* Give these pointers to the scheduler so it knows where to copy the process tables to*/
-	//	pQhPtrs[i] = &pQh[i][0];
-	//}
-	
+	int i;
+
+	for(i = 0; i < (ALL_PROCS); i++)
+	{
+		if(strcmp(pInfo[0][i].p_name, ""))
+			printf("Proc %d: %s\n", i, pInfo[0][i].p_name);
+	}
+
+
+
+	// Replace struct pi pInfo[i][] = NULL with process table information from the scheduler*/
+	for(i=0;i<HISTORY;i++)
+	{
+		//strcpy(pInfo[i][0].p_name,"NOPTABCOPY"); /*Signal to the GUI that there are no process tables */
+		
+		//pInfoPtrs[i] = &pInfo[i][0]; /* Give these pointers to the scheduler so it knows where to copy the process tables to*/
+		//pQhPtrs[i] = &pQh[i][0];
+	}
+	/*
 	/* Uncomment the following line to run the test processes */
 	//procs(); 
 	

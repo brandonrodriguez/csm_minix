@@ -261,7 +261,9 @@ void system_init(void)
   /* Scheduling */
   map(SYS_SCHEDULE, do_schedule);	/* reschedule a process */
   map(SYS_SCHEDCTL, do_schedctl);	/* change process scheduler */
-
+	
+  /* !OSPROJ3! Maps the kernel call for getqhead */
+  map(SYS_GETQHEAD, do_getqhead);
 }
 /*===========================================================================*
  *				get_priv				     *

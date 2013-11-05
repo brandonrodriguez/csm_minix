@@ -8,6 +8,8 @@
 #include "sched.h"
 #include "glo.h"
 #include "schedproc.h"
+#include "ospex.h"
+
 /* Declare some local functions. */
 static void reply(endpoint_t whom, message *m_ptr);
 static void sef_local_startup(void);
@@ -26,7 +28,7 @@ char *srcPtrCpu;
 struct pi *pInfoPtrs[HISTORY];	
 struct qh *pQhPtrs[HISTORY];
 
-char returnString[] = "This is the return string\n";
+
 /*===========================================================================*
  *				main					     *
  *===========================================================================*/
@@ -75,8 +77,10 @@ int main(void)
 			int res;
 		/* !OSPROJ3! Case statement for the task call */	
 		case SCHEDULING_GET_PROCTABLE:
-				//res = sys_vircopy(SELF, &returnString, (endpoint_t)m_in.m1_i1, m_in.m1_p1, sizeof(returnString));
-				printf("Hello From the Scheduler vir_copy: %d\n" , res);
+				sys_getqhead(NULL, NULL);
+				//Copy the entire history to the pointer passed in
+				res = sys_vircopy(SELF, (vir_bytes)&snapShotHist, m_in.m1_i1, (vir_bytes)m_in.m1_p1, sizeof(snapShotHist));
+				printf("In Sched, result of vir_copy:%d\n" , res);
 			break;
 		case SCHEDULING_INHERIT:
 		case SCHEDULING_START:
