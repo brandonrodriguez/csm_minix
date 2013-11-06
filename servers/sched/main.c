@@ -29,11 +29,14 @@ struct pi *pInfoPtrs[HISTORY];
 struct qh *pQhPtrs[HISTORY];
 
 
+
 /*===========================================================================*
  *				main					     *
  *===========================================================================*/
 int main(void)
 {
+	firstCall = 0;
+	
 	/* Main routine of the scheduler. */
 	message m_in;	/* the incoming message itself is kept here. */
 	int call_nr;	/* system call number */
@@ -74,13 +77,18 @@ int main(void)
 		}
 
 		switch(call_nr) {
-			int res;
 		/* !OSPROJ3! Case statement for the task call */	
 		case SCHEDULING_GET_PROCTABLE:
-				sys_getqhead(NULL, NULL);
+				if(!firstCall)
+				{
+					firstCall = 1;
+					OSSendPtab();
+				}
 				//Copy the entire history to the pointer passed in
-				res = sys_vircopy(SELF, (vir_bytes)&snapShotHist, m_in.m1_i1, (vir_bytes)m_in.m1_p1, sizeof(snapShotHist));
-				printf("In Sched, result of vir_copy:%d\n" , res);
+				sys_vircopy(SELF, (vir_bytes)&snapShotHist, m_in.m1_i1, (vir_bytes)m_in.m1_p1, sizeof(snapShotHist));
+				sys_vircopy(SELF, (vir_bytes)&qHist, m_in.m1_i1, (vir_bytes)m_in.m1_p2, sizeof(qHist));
+				sys_vircopy(SELF, (vir_bytes)&cpuFreq, m_in.m1_i1, (vir_bytes)m_in.m1_p3, sizeof(cpuFreq));
+				printf("In Sched\n");
 			break;
 		case SCHEDULING_INHERIT:
 		case SCHEDULING_START:

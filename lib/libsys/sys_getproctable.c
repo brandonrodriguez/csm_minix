@@ -26,7 +26,7 @@ int sys_getproctable(char *procPtr)
 }
 
 
-int sys_getqhead(struct qh *qPtr,u64_t *cpuFreqPtr)
+int sys_getqhead(struct proc *qPtr,u64_t *cpuFreqPtr)
 {
 	message m;
 	m.m1_p1 = (char *)qPtr;

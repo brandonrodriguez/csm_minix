@@ -1,4 +1,9 @@
+#include <stdio.h>
+#include <string.h>
 #include <minix/pi.h>
+#include <minix/syslib.h>
+#include "com.h"
+#include "procs.h"
 
 /* Do not modify this file */
 extern struct pi *pInfoPtrs[HISTORY];

@@ -1,6 +1,10 @@
 #include "ospex.h"
 #include "glo.h"
+#include "sched.h"
 
+#include "schedproc.h"
+#include "ospex.h"
+#include <minix/syslib.h>
 /* !OSPROJ3! */
 
 
@@ -8,14 +12,25 @@ int snapNum = 0;
 
 void OSSendPtab(void)
 {
-	if(snapNum == 50)
+	if(snapNum == HISTORY || !firstCall)
 		return;
-
-	//Get a copy of the current scheduling process table
-
-	sys_getproctab((struct proc *) &tmpPtab);
-	
+			
 	int i;
+	
+	struct qh qHistCur[NR_SCHED_QUEUES];
+	
+	
+	//Copy the queue head	
+	sys_getqhead(&qHistCur, &cpuFreq);
+	
+	for(i = 0; i < (NR_SCHED_QUEUES); i++)
+	{
+		strcpy(qHist[snapNum][i].p_name, qHistCur[i].p_name);
+		qHist[snapNum][i].p_endpoint = qHistCur[i].p_endpoint;
+	}
+	
+	//Get a copy of the current scheduling process table
+	sys_getproctab((struct proc *) &tmpPtab);
 	
 	//Check all processes
 	for(i=0;i<(NR_PROCS+NR_TASKS);i++)
@@ -34,7 +49,7 @@ void OSSendPtab(void)
 		//Queue head copy goes here	if needed
 		
 		//Copy NextReady
-		/*if(tmpPtab[i].p_nextready)
+		if(tmpPtab[i].p_nextready)
 		{
 			//Copy the process
 			sys_vircopy(SYSTEM,(vir_bytes) tmpPtab[i].p_nextready, SELF,(vir_bytes) &nextProc,sizeof(struct proc));
@@ -48,10 +63,10 @@ void OSSendPtab(void)
 			//Copy no Name and -1 for endpoint
 			strcpy(snapShotHist[snapNum][i].p_nextready, NOPROC);
 			snapShotHist[snapNum][i].p_nextready_endpoint = -1;
-		}*/
+		}
 		
 		//Copy the p_accounting
-		//sys_vircopy(SYSTEM,(vir_bytes) &tmpPtab[i].p_accounting, SELF,(vir_bytes) &(snapShotHist[snapNum][i].p_times) ,sizeof(struct p_accounting));
+		sys_vircopy(SYSTEM,(vir_bytes) &tmpPtab[i].p_accounting, SELF,(vir_bytes) &(snapShotHist[snapNum][i].p_times) ,sizeof(struct p_accounting));
 		//Copy user time
 		snapShotHist[snapNum][i].p_user_time = tmpPtab[i].p_user_time;
 		//Copy sys time

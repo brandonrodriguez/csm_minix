@@ -24,8 +24,7 @@ These are global variables and their extern decleration can be found in the glo.
 #include <stdlib.h>
 #include <stdio.h>
 #include <minix/syslib.h>
-#include </usr/src/include/minix/syslib.h>
-
+#include "glo.h"
 
 #include "student.h" 
 
@@ -35,28 +34,36 @@ u64_t cpuFreq;
 struct qh *pQhPtrs[HISTORY];
 struct qh pQh[HISTORY][NR_SCHED_QUEUES];
 
-int sys_getproctable(char *procPtr); 
 
 
 void studentInput (void)
-{
-					
+{			
 	
 	message m;
 	m.m1_p1 = (char *)&pInfo;
+	m.m1_p2 = (char *)&pQh;
+	m.m1_p3 = (char *)&cpuFreq;
 	
 	//sys_getproctable(string);
 	
 	_syscall(PM_PROC_NR, GETPROCTABLE , &m);
 	
-	//_kernel_call(SYS_GETQHEAD, &m);
 
+	
+	printf("CPU Freq: %d\n", cpuFreq);
+	
 	int i;
+
+	for(i = 0; i < (NR_SCHED_QUEUES); i++)
+	{
+		if(pQh[10][i].p_endpoint != -1)
+			printf("Head %d: %s\n", i, pQh[10][i].p_name);
+	}
 
 	for(i = 0; i < (ALL_PROCS); i++)
 	{
-		if(strcmp(pInfo[0][i].p_name, ""))
-			printf("Proc %d: %s\n", i, pInfo[0][i].p_name);
+		if(strcmp(pInfo[10][i].p_name, "nroff"))
+			printf("Proc %d: %s\n", i, pInfo[10][i].p_name);
 	}
 
 
@@ -66,12 +73,12 @@ void studentInput (void)
 	{
 		//strcpy(pInfo[i][0].p_name,"NOPTABCOPY"); /*Signal to the GUI that there are no process tables */
 		
-		//pInfoPtrs[i] = &pInfo[i][0]; /* Give these pointers to the scheduler so it knows where to copy the process tables to*/
-		//pQhPtrs[i] = &pQh[i][0];
+		pInfoPtrs[i] = &pInfo[i][0]; /* Give these pointers to the scheduler so it knows where to copy the process tables to*/
+		pQhPtrs[i] = &pQh[i][0];
 	}
 	/*
 	/* Uncomment the following line to run the test processes */
-	//procs(); 
+	procs(); 
 	
 	/*Run this code to make sure all procs all killed after the simulation is complete */
 	/* for(i=0;i<PROCNUM;i++)

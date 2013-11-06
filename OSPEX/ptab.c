@@ -241,6 +241,7 @@ while(!exitCondition){
 			   report.xbutton.y > rectPts[nr_queues+3].y &&
 			   report.xbutton.y < rectPts[nr_queues+3].y + rectPts[nr_queues+3].height){
 			   	if(displayTab<(HISTORY-1)){
+					studentInput();
 					displayTab++;
 					/* Update the snapshot count on screen */
 					displayTab_size = sprintf(displayTab_text,"You are looking at snapshot: %d",displayTab);
@@ -256,6 +257,7 @@ while(!exitCondition){
 			   report.xbutton.y > rectPts[nr_queues+2].y &&
 			   report.xbutton.y < rectPts[nr_queues+2].y + rectPts[nr_queues+2].height){
 				   if(displayTab>0){
+					   studentInput();
 						displayTab--;
 						/* Update the snapshot count on screen */
 						displayTab_size = sprintf(displayTab_text,"You are looking at snapshot: %d",displayTab);
